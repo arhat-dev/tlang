@@ -230,15 +230,13 @@ func lexWhitespace(l *lexer) (ret item, next stateFn) {
 		}
 	}
 
-	// when r end up being whitespace, we MUST have reached EOF
+	l.start = l.pos
+	l.startLine = l.line
 	switch r {
 	case ' ', '\r', '\t', '\n', eof:
-		l.start = l.pos
-		l.startLine = l.line
+		// when r end up being whitespace, we MUST have reached EOF
 		return l.emit(itemEOF), nil
 	case '#':
-		l.start = l.pos
-		l.startLine = l.line
 		return lexComment(l)
 	}
 
@@ -433,7 +431,10 @@ func lexInActionSpace(l *lexer) (ret item, next stateFn) {
 			// reached EOF
 			emitRightDelim = true
 		}
-	case '#', ';':
+	case ';':
+		l.pos++ // include this one
+		emitRightDelim = true
+	case '#':
 		emitRightDelim = true
 	case eof:
 		l.width = 0

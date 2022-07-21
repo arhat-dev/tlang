@@ -102,7 +102,7 @@ var lexTests = []lexTest{
 		tRight,
 		tEOF,
 	}},
-	{"semi-colon separated actions", "`x`;foo;;;", []item{
+	{"semi-colon separated actions", "`x` ; foo ;;;", []item{
 		tLeft,
 		mkItem(itemRawString, "`x`"),
 		tRight,
