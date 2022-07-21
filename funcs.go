@@ -30,7 +30,7 @@ var _ parse.TemplateFuncs = (*FuncMap)(nil)
 type FuncMap map[string]any
 
 func (fm FuncMap) Has(name string) bool {
-	return fm[name] == nil
+	return fm[name] != nil
 }
 
 func (fm FuncMap) GetByName(name string) reflect.Value {
